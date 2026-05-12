@@ -22,21 +22,21 @@ const (
 func parsePackage(data string) (int, time.Duration, error) {
 	splitedString := strings.Split(data, ",")
 	if len(splitedString) != 2 {
-		return 0, time.Duration(0), errors.New("Неверное количество переданных данных")
+		return 0, time.Duration(0), errors.New("incorrect amount of transferred data")
 	}
 	steps, err := strconv.Atoi(splitedString[0])
 	if err != nil {
 		return 0, time.Duration(0), err
 	}
 	if steps <= 0 {
-		return 0, time.Duration(0), errors.New("Неверное количество шагов")
+		return 0, time.Duration(0), errors.New("incorrect number of steps")
 	}
 	duration, err := time.ParseDuration(splitedString[1])
 	if err != nil {
 		return 0, time.Duration(0), err
 	}
 	if duration <= 0 {
-		return 0, time.Duration(0), errors.New("Неверная длительность активности")
+		return 0, time.Duration(0), errors.New("incorrect duration of activity")
 	}
 	return steps, duration, err
 }

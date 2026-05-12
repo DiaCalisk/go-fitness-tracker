@@ -21,7 +21,7 @@ const (
 func parseTraining(data string) (int, string, time.Duration, error) {
 	splitedString := strings.Split(data, ",")
 	if len(splitedString) != 3 {
-		return 0, "", time.Duration(0), errors.New("Неверное количество переданных данных")
+		return 0, "", time.Duration(0), errors.New("incorrect amount of transferred data")
 	}
 
 	steps, err := strconv.Atoi(splitedString[0])
@@ -29,7 +29,7 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 		return 0, "", time.Duration(0), err
 	}
 	if steps <= 0 {
-		return 0, "", time.Duration(0), errors.New("Неверное количество шагов")
+		return 0, "", time.Duration(0), errors.New("incorrect number of steps")
 	}
 
 	duration, err := time.ParseDuration(splitedString[2])
@@ -37,7 +37,7 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 		return 0, "", time.Duration(0), err
 	}
 	if duration <= 0 {
-		return 0, "", time.Duration(0), errors.New("Неверная длительность активности")
+		return 0, "", time.Duration(0), errors.New("incorrect duration of activity")
 	}
 	return steps, splitedString[1], duration, err
 }
@@ -90,32 +90,32 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 	//Мало ли на ребёнка повесят трекер)
 	switch {
 	case weight <= 2:
-		return 0, errors.New("Некорректные параметры веса.")
+		return 0, errors.New("incorrect weight")
 	case height <= 0.5:
-		return 0, errors.New("Некорректные параметры роста.")
+		return 0, errors.New("incorrect height")
 	case duration <= 0:
-		return 0, errors.New("Некорректные длительность.")
+		return 0, errors.New("incorrect duration of activity")
 	case steps <= 0:
-		return 0, errors.New("Некорректное количество шагов.")
+		return 0, errors.New("incorrect number of steps")
 	}
 	avgSpeed := meanSpeed(steps, height, duration)
 
-	return (weight * avgSpeed * duration.Minutes()) / float64(minInH), nil
+	return (weight * avgSpeed * duration.Minutes()) / minInH, nil
 }
 
 //WalkingSpentCalories возвращает количество потраченных калорий при прогулке.
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
 	switch {
 	case weight <= 2:
-		return 0, errors.New("Некорректные параметры веса.")
+		return 0, errors.New("incorrect weight")
 	case height <= 0.5:
-		return 0, errors.New("Некорректные параметры роста.")
+		return 0, errors.New("incorrect height")
 	case duration <= 0:
-		return 0, errors.New("Некорректные длительность.")
+		return 0, errors.New("incorrect duration of activity")
 	case steps <= 0:
-		return 0, errors.New("Некорректное количество шагов.")
+		return 0, errors.New("incorrect number of steps")
 	}
 	avgSpeed := meanSpeed(steps, height, duration)
 
-	return (weight * avgSpeed * duration.Minutes() * walkingCaloriesCoefficient) / float64(minInH), nil
+	return (weight * avgSpeed * duration.Minutes() * walkingCaloriesCoefficient) / minInH, nil
 }
